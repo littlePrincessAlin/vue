@@ -1,18 +1,25 @@
 lockfileVersion: 5.4
 
-specifiers:
-  '@vitejs/plugin-vue': ^5.1.2
-  vite: ^5.4.1
-  vue: ^3.4.37
-  vue-router: ^4.4.3
+importers:
 
-dependencies:
-  vue: 3.4.38
-  vue-router: 4.4.3_vue@3.4.38
+  .:
+    specifiers:
+      '@vitejs/plugin-vue': ^5.1.2
+      vite: ^5.4.1
+      vue: ^3.4.37
+      vue-router: ^4.4.3
+    dependencies:
+      vue: 3.4.38
+      vue-router: 4.4.3_vue@3.4.38
+    devDependencies:
+      '@vitejs/plugin-vue': 5.1.2_vite@5.4.2+vue@3.4.38
+      vite: 5.4.2
 
-devDependencies:
-  '@vitejs/plugin-vue': 5.1.2_vite@5.4.2+vue@3.4.38
-  vite: 5.4.2
+  packages/vue3-screen:
+    specifiers:
+      echarts: ^5.5.1
+    dependencies:
+      echarts: 5.5.1
 
 packages:
 
@@ -473,6 +480,13 @@ packages:
   /csstype/3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
+  /echarts/5.5.1:
+    resolution: {integrity: sha512-Fce8upazaAXUVUVsjgV6mBnGuqgO+JNDlcgF79Dksy4+wgGpQB2lmYoO4TSweFg/mZITdpGHomw/cNBJZj1icA==}
+    dependencies:
+      tslib: 2.3.0
+      zrender: 5.6.0
+    dev: false
+
   /entities/4.5.0:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
@@ -574,6 +588,10 @@ packages:
     resolution: {integrity: sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=}
     engines: {node: '>=4'}
 
+  /tslib/2.3.0:
+    resolution: {integrity: sha1-gDuM2rPhK6WBpMpByIObuw2ssJ4=}
+    dev: false
+
   /vite/5.4.2:
     resolution: {integrity: sha512-dDrQTRHp5C1fTFzcSaMxjk6vdpKvT+2/mIdE07Gw2ykehT49O0z/VHS3zZ8iV/Gh8BJJKHWOe5RjaNrW5xf/GA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -634,3 +652,9 @@ packages:
       '@vue/runtime-dom': 3.4.38
       '@vue/server-renderer': 3.4.38_vue@3.4.38
       '@vue/shared': 3.4.38
+
+  /zrender/5.6.0:
+    resolution: {integrity: sha512-uzgraf4njmmHAbEUxMJ8Oxg+P3fT04O+9p7gY+wJRVxo8Ge+KmYv0WJev945EH4wFuc4OY2NLXz46FZrWS9xJg==}
+    dependencies:
+      tslib: 2.3.0
+    dev: false
