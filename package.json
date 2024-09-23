@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev:screen": "pnpm --filter 'vue3-screen' dev",
-    "dev:demo1": "pnpm --filter 'vue3-demo1' dev"
+    "dev:demo1": "pnpm --filter 'vue3-demo1' dev",
+    "build:demo1": "pnpm --filter 'vue3-demo1' build"
   },
   "dependencies": {
     "vue": "^3.4.37",

@@ -13,3 +13,9 @@ cd ..
 cd ..
 pnpm run dev:screen
 ```
+
+# vue3-demo2
+直接使用vue脚手架安装
+```shell
+pnpm create vue@latest
+```
