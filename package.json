@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev:screen": "pnpm --filter 'vue3-screen' dev"
+    "dev:screen": "pnpm --filter 'vue3-screen' dev",
+    "dev:demo1": "pnpm --filter 'vue3-demo1' dev"
   },
   "dependencies": {
     "vue": "^3.4.37",
