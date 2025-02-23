@@ -8,10 +8,12 @@
     "build:demo1": "pnpm --filter 'vue3-demo1' build"
   },
   "dependencies": {
+    "ant-design-vue": "4.x",
     "vue": "^3.4.37",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
     "@vitejs/plugin-vue": "^5.1.2",
     "vite": "^5.4.1"
   },

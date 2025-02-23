@@ -1,35 +1,40 @@
 <script setup>
 import { ref } from "vue";
+import { Layout, Menu } from "ant-design-vue";
 import { useRouter } from "vue-router";
+const { Header, Content } = Layout;
 const router = useRouter();
 
-const dataList = ref([
+// 顶部菜单
+const headMenu = ref([
   {
-    name: "模版语法",
-    path: "/mustache",
-  },
-  {
-    name: "响应式基础",
-    path: "/ref",
+    key: "grammar",
+    label: "vue3语法",
+    title: "vue3语法",
   },
 ]);
+const headCurrent = ref(["grammar"]);
 
-const handleClick = (item) => {
-  router.push({ path: item.path });
+const handleClickMenu = ({ item }) => {
+  router.push({ path: item.key });
 };
 </script>
 
 <template>
-  <div>
-    <h3>基础</h3>
-    <div
-      v-for="(item, index) in dataList"
-      :key="index"
-      @click="handleClick(item)"
-    >
-      <span>{{ item.name }}</span>
-    </div>
-  </div>
+  <Layout>
+    <Header>
+      <Menu
+        mode="horizontal"
+        theme="dark"
+        :selectedKeys="headCurrent"
+        :items="headMenu"
+        @click="handleClickMenu"
+      ></Menu>
+    </Header>
+    <Content>
+      <router-view></router-view>
+    </Content>
+  </Layout>
 </template>
 
 <style scoped></style>
