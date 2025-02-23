@@ -1,38 +1,43 @@
 <script setup>
-import { ref, h } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import { Layout, Menu } from "ant-design-vue";
-import { MailOutlined } from "@ant-design/icons-vue";
-const { Header, Sider, Content } = Layout;
+import { ref, h, onMounted } from 'vue';
+import { menuKey } from '@/utils/index';
+import { useRouter } from 'vue-router';
+import { Layout, Menu } from 'ant-design-vue';
+import { MailOutlined } from '@ant-design/icons-vue';
+const { Sider, Content } = Layout;
 const router = useRouter();
-const route = useRoute();
 
 // 顶部菜单
 const sliderMenu = ref([
   {
-    key: "base",
+    key: 'base',
     icon: () => h(MailOutlined),
-    label: "基础基础",
-    title: "基础基础",
+    label: '基础基础',
+    title: '基础基础',
     children: [
       {
-        key: "mustache",
-        label: "模版语法",
-        title: "模版语法",
+        key: 'mustache',
+        label: '模版语法',
+        title: '模版语法',
       },
       {
-        key: "ref",
-        label: "响应式基础",
-        title: "响应式基础",
+        key: 'ref',
+        label: '响应式基础',
+        title: '响应式基础',
       },
     ],
   },
 ]);
-const current = ref([""]);
+const current = ref(['mustache']);
 
-const handleClick = (item) => {
-  router.push({ path: "/grammar/" + item.key });
+const handleClick = item => {
+  router.push({ path: '/grammar/' + item.key });
+  current.value[0] = item.key;
 };
+
+onMounted(() => {
+  current.value[0] = menuKey();
+});
 </script>
 
 <template>
@@ -43,8 +48,7 @@ const handleClick = (item) => {
         theme="dark"
         :selectedKeys="current"
         :items="sliderMenu"
-        @click="handleClick"
-      ></Menu>
+        @click="handleClick"></Menu>
     </Sider>
     <Content>
       <router-view></router-view>
