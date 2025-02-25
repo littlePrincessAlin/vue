@@ -52,14 +52,21 @@ onMounted(() => {
         @click="handleClick"
       ></Menu>
     </Sider>
-    <Content>
+    <Content class="grammar__content">
       <router-view></router-view>
     </Content>
   </Layout>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .grammar {
-  height: calc(100vh - 64px);
+  height: 100%;
+  &__sider {
+    height: 100%;
+    overflow-y: scroll;
+  }
+  &__content {
+    overflow-y: scroll;
+  }
 }
 </style>

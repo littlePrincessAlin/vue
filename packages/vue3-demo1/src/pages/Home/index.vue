@@ -21,14 +21,15 @@ const handleClickMenu = ({ item }) => {
 </script>
 
 <template>
-  <Layout>
+  <Layout class="page">
     <Header>
       <Menu
         mode="horizontal"
         theme="dark"
         :selectedKeys="headCurrent"
         :items="headMenu"
-        @click="handleClickMenu"></Menu>
+        @click="handleClickMenu"
+      ></Menu>
     </Header>
     <Content>
       <router-view></router-view>
@@ -36,4 +37,12 @@ const handleClickMenu = ({ item }) => {
   </Layout>
 </template>
 
-<style scoped></style>
+<style scoped>
+.page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+</style>
