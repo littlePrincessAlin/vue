@@ -1,27 +1,27 @@
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from 'vue-router';
 
-import Home from "@pages/Home/index";
-import Grammar from "@pages/Home/grammar";
-import Mustache from "@pages/Mustache/index";
-import Ref from "@pages/Ref/index";
+import Home from '@pages/Home/index';
+import Grammar from '@pages/Home/grammar';
+import Base from '@pages/Base/index';
+import Observable from '@pages/Learn/observable';
 
 const routes = [
   {
-    path: "/",
-    redirect: "/grammar",
+    path: '/',
+    redirect: '/grammar',
     component: Home,
     children: [
       {
-        path: "grammar",
+        path: 'grammar',
         component: Grammar,
         children: [
           {
-            path: "mustache",
-            component: Mustache,
+            path: 'base',
+            component: Base,
           },
           {
-            path: "ref",
-            component: Ref,
+            path: 'observable',
+            component: Observable,
           },
         ],
       },
