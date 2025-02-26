@@ -496,6 +496,14 @@ onMounted((age) => {
         <p>------</p>
       </div>
     </div>
+
+    <div class="card">
+      <h4>内置组件</h4>
+      <div class="card__content">
+        <div></div>
+        <p>------</p>
+      </div>
+    </div>
   </div>
 </template>
 
