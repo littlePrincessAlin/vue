@@ -1,24 +1,24 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true,
-    browser: true,
-    commonjs: true,
-    es6: true,
-  },
-  globals: {
-    vue: true,
-    wx: true,
-    AMap: true,
-  },
-  extends: ["plugin:vue/essential", "eslint:recommended"],
-  parserOptions: {
-    parser: "babel-eslint",
-  },
+  // root: true,
+  // env: {
+  //   node: true,
+  //   browser: true,
+  //   commonjs: true,
+  //   es6: true,
+  // },
+  // globals: {
+  //   vue: true,
+  //   wx: true,
+  //   AMap: true,
+  // },
+  // extends: ["plugin:vue/essential", "eslint:recommended"],
+  // parserOptions: {
+  //   parser: "babel-eslint",
+  // },
 
   rules: {
     // vue
-    "vue/multi-word-component-names": "off",
+    // "vue/multi-word-component-names": "off",
     // https://zh-hans.eslint.org/docs/latest/rules/#possible-problems
     // 数组 api 如无需返回值请考虑使用 .forEach 代替。
     "array-callback-return": "error",
@@ -46,8 +46,8 @@ module.exports = {
     "no-unused-vars": "warn",
 
     // sugestion
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    // "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    // "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-useless-escape": "off",
     "max-lines": ["warn", 1000],
     "max-lines-per-function": ["warn", 1000],
