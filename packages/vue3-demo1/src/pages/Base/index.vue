@@ -1,5 +1,14 @@
 <script setup>
-import { ref, reactive, nextTick, onMounted, computed } from 'vue';
+import {
+  ref,
+  reactive,
+  nextTick,
+  onMounted,
+  computed,
+  watch,
+  watchEffect,
+  useTemplateRef,
+} from 'vue';
 import { Button, Input } from 'ant-design-vue';
 
 const str = '这是一个双大括号包裹的普通文本插值';
@@ -54,7 +63,8 @@ const handleReactive = () => {
     age: 71,
   };
 };
-const reactiveStr = reactive('haha');
+// 直接会warn
+const reactiveStr = reactive('');
 const handleStr = () => {
   reactiveStr.value = 'haha2';
 };
@@ -138,9 +148,78 @@ const sendMessage = (msg) => {
 };
 const message = ref('');
 
+// watch
+const question = ref('');
+const answer = ref('Questions usually contain a question mark. ;-)');
+const loading = ref(false);
+
+// 可以直接侦听一个 ref
+watch(question, async (newQuestion, oldQuestion) => {
+  if (newQuestion.includes('?')) {
+    loading.value = true;
+    answer.value = 'Thinking...';
+    try {
+      const res = await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            answer: 'yes',
+          });
+        }, 500);
+      });
+      answer.value = res.answer;
+    } catch (error) {
+      answer.value = 'Error! Could not reach the API. ' + error;
+    } finally {
+      loading.value = false;
+    }
+  }
+});
+const obj1 = reactive({ count: 0 });
+watch(obj1, (count) => {
+  // 在嵌套的属性变更时触发
+  // 注意：`newValue` 此处和 `oldValue` 是相等的
+  // 因为它们是同一个对象！
+  // 此时默认就是一个深层监听，
+});
+
+// 错误，因为 watch() 得到的参数是一个 number
+// watch(obj1.count, (count) => {
+//   console.log(`Count is: ${count}`);
+// });
+// 应该是这种getter函数
+watch(
+  () => obj1.count,
+  (count) => {
+    // 此时默认只有当obj1.count变化，才能被监听到
+    console.log(`Count is: ${count}`);
+  },
+  // 显式地加上 deep 选项，强制转成深层侦听器
+  { deep: true }
+);
+const x = ref(0);
+const y = ref(0);
+// 多个来源组成的数组
+watch([x, () => y.value], ([newX, newY]) => {
+  console.log(`x is ${newX} and y is ${newY}`);
+});
+
+// watchEffect
+const watchEffectCount = ref(0);
+const watchEffectShow = ref(null);
+watchEffect(() => {
+  const params = {
+    watchEffectCount: watchEffectCount.value,
+  };
+  watchEffectShow.value = watchEffectCount.value;
+  console.log(params, 'params');
+});
+
 onMounted((age) => {
   age = '我改，但是不影响reactiveStudent';
   console.log('解构的age不具有响应性', age);
+  const input = useTemplateRef('my-input');
+  const input2 = ref(null);
+  console.log('ref', input, input2);
 });
 </script>
 
@@ -473,32 +552,98 @@ onMounted((age) => {
         <div>
           watch 的第一个参数可以是不同形式的“数据源”：它可以是一个 ref
           (包括计算属性)、一个响应式对象、一个 getter
-          函数、或多个数据源组成的数组：
+          函数、或多个数据源组成的数组
         </div>
+        <p>
+          1. 第一个参数是ref： Ask a yes/no question:
+          <input v-model="question" :disabled="loading" />
+        </p>
+        <p>{{ answer }}</p>
+        <p>监听输入的question，回调中发现新question中包含?，回答yes</p>
+        <p>2. 第一个参数是getter函数：</p>
+        <p>3. 第一个参数是多个来源组成的数组：</p>
         <p>------</p>
         <div>
-          <div>2、一个watch的例子</div>
-          <div></div>
+          <div>2、深层监听器</div>
+          <ul>
+            <li>1. 如果第一个参数是ref、reactive、计算属性，默认就是深层的</li>
+            <li>2. getter函数，只有改到对应的，才能监听到</li>
+            <li>3. 可以显示传递{deep: true}变成深层的</li>
+          </ul>
+        </div>
+        <p>------</p>
+        <div>3、immediate: true 创建监听器是立刻被执行</div>
+        <p>------</p>
+        <div>4、once: true 一次性侦听器</div>
+        <p>------</p>
+        <div>5、watchEffect()</div>
+        <div>
+          <Button @click="watchEffectCount++">watchEffectCount+1</Button>
+          点击按钮：
+          {{ watchEffectShow }}
+        </div>
+        <div>watchEffect会立即触发执行；自动跟踪回调的响应式依赖；</div>
+        <p>------</p>
+        <div>6、watchEffect vs watch</div>
+        <ul>
+          <li>
+            watch：只追踪明确侦听的数据，不会关心回调里的，我们可以精确的控制回调的触发时机
+          </li>
+          <li>watchEffect：自动追踪所有能访问到的响应式属性</li>
+        </ul>
+        <p>------</p>
+        <div>7、副作用清理</div>
+        <div>
+          这里先强调一下，什么是副作用：当你watch了一个id的变更，进行axios请求时。如果id变了，过时的id发起的请求我们不期望关心了。因此需要放弃过时的请求
+        </div>
+        <div>
+          onWatcherCleanup：当watch/watchEffect失效并重新运行时调用（vue3.5+支持）
+        </div>
+        <div>
+          onCleanup：作为watch/watchEffect回调函数的第三个参数使用（低版本）
+        </div>
+        <p>------</p>
+        <div>8、回调的触发时机</div>
+        <ul>
+          <li>默认：watch回调会在父组件更新后，子组件更新前触发。</li>
+          <li>flush: 'post'：后置刷新，能访问到子组件更新后的dom</li>
+          <li>
+            flush: 'sync'/watchSyncEffect()：同步刷新， Vue 进行任何更新之前触发
+          </li>
+        </ul>
+        <p>------</p>
+        <div>9、停止侦听器</div>
+        <div>
+          一个同步的监听器，是会跟着组件卸载一起停止的；但是异步的监听器（也就是在setTimeout中的），需要手动停止，以防内存泄漏
+        </div>
+        <div>
+          要手动停止一个侦听器，直接调用 watch 或 watchEffect 返回的函数
         </div>
       </div>
     </div>
     <div class="card">
-      <h4>模版引用</h4>
+      <h4>模版引用 useTemplateRef与ref</h4>
       <div class="card__content">
-        <div></div>
+        <div>3.5版本前后两种写法：</div>
+        <div>const input = useTemplateRef('my-input')</div>
+        <input ref="my-input" />
+        <div>const input = ref(null)</div>
+        <input ref="input" />
         <p>------</p>
+        <div>
+          如果一个子组件使用的是选项式 API 或没有使用 script
+          setup，被引用的组件实例和该子组件的 this
+          完全一致，这意味着父组件对子组件的每一个属性和方法都有完全的访问权。
+        </div>
+        <div>
+          script setup的组件是默认私有的：一个父组件无法访问到一个使用了 script
+          setup 的子组件中的任何东西，除非子组件在其中通过 defineExpose
+          宏显式暴露
+        </div>
       </div>
     </div>
     <div class="card">
       <h4>组件基础</h4>
-      <div class="card__content">
-        <div></div>
-        <p>------</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <h4>内置组件</h4>
       <div class="card__content">
         <div></div>
         <p>------</p>

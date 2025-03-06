@@ -16,6 +16,12 @@ const sliderMenu = ref([
     title: '基础基础',
   },
   {
+    key: 'component',
+    icon: () => h(MailOutlined),
+    label: '深入组件与复用',
+    title: '深入组件与复用',
+  },
+  {
     key: 'learn',
     icon: () => h(AppstoreOutlined),
     label: '源码原理',

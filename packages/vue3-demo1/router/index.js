@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Home from '@pages/Home/index';
 import Grammar from '@pages/Home/grammar';
 import Base from '@pages/Base/index';
+import Components from '@pages/Components/index';
 import Observable from '@pages/Learn/observable';
 
 const routes = [
@@ -18,6 +19,10 @@ const routes = [
           {
             path: 'base',
             component: Base,
+          },
+          {
+            path: 'component',
+            component: Components,
           },
           {
             path: 'observable',
