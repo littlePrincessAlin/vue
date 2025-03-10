@@ -5,7 +5,9 @@
   "scripts": {
     "dev:screen": "pnpm --filter 'vue3-screen' dev",
     "dev:demo1": "pnpm --filter 'vue3-demo1' dev",
-    "build:demo1": "pnpm --filter 'vue3-demo1' build"
+    "build:demo1": "pnpm --filter 'vue3-demo1' build",
+    "dev:test": "pnpm --filter 'vue-test' dev",
+    "build:test": "pnpm --filter 'vue-test' build"
   },
   "dependencies": {
     "ant-design-vue": "4.2.6",
