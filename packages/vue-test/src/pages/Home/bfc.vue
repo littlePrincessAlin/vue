@@ -2,8 +2,9 @@
 </script>
 
 <template>
-  <router-view />
+  <div>bfc</div>
 </template>
 
 <style scoped>
+
 </style>
