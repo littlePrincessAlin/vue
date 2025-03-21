@@ -10,6 +10,8 @@ import {
   useTemplateRef,
 } from 'vue';
 import { Button, Input } from 'ant-design-vue';
+// 注册组件
+import Tabel from './tabel.vue';
 
 const str = '这是一个双大括号包裹的普通文本插值';
 const rawHtml = '<span style="color: red">This should be red.</span>';
@@ -622,12 +624,15 @@ onMounted((age) => {
       </div>
     </div>
     <div class="card">
-      <h4>模版引用 useTemplateRef与ref</h4>
+      <h4>模版引用(获取dom) useTemplateRef与ref与$refs</h4>
       <div class="card__content">
         <div>3.5版本前后两种写法：</div>
         <div>const input = useTemplateRef('my-input')</div>
         <input ref="my-input" />
         <div>const input = ref(null)</div>
+        <input ref="input" />
+        <div>2.7以下版本写法：</div>
+        <div>this.$refs.input.focus()</div>
         <input ref="input" />
         <p>------</p>
         <div>
@@ -645,7 +650,8 @@ onMounted((age) => {
     <div class="card">
       <h4>组件基础</h4>
       <div class="card__content">
-        <div></div>
+        <div>这是一个表单组件</div>
+        <Tabel />
         <p>------</p>
       </div>
     </div>
